@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IU OS | INNER UNKNOWN</title>
+
+<style>
+
+/* =========================
+   GLOBAL SYSTEM
+========================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* =========================
+   CINEMATIC BACKGROUND
+========================= */
+.bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at center, rgba(255,0,0,0.12), transparent 60%);
+  animation:pulse 6s infinite;
+  z-index:-1;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.15);}
+  100%{transform:scale(1);}
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+}
+
+.hero h1{
+  font-size:65px;
+  letter-spacing:12px;
+  position:relative;
+}
+
+/* glitch effect */
+.hero h1::before,
+.hero h1::after{
+  content:"IU OS";
+  position:absolute;
+  left:0;
+  width:100%;
+}
+
+.hero h1::before{
+  color:red;
+  top:-2px;
+  animation:glitch 2s infinite;
+}
+
+.hero h1::after{
+  color:blue;
+  top:2px;
+  animation:glitch 3s infinite;
+}
+
+@keyframes glitch{
+  0%{transform:translate(0);}
+  20%{transform:translate(-2px,2px);}
+  40%{transform:translate(2px,-2px);}
+  60%{transform:translate(-1px,1px);}
+  80%{transform:translate(1px,-1px);}
+  100%{transform:translate(0);}
+}
+
+.hero p{
+  margin-top:15px;
+  color:#aaa;
+  letter-spacing:6px;
+}
+
+.hero span{
+  margin-top:25px;
+  color:#666;
+  font-size:13px;
+}
+
+.btn{
+  margin-top:30px;
+  padding:12px 28px;
+  border:1px solid #444;
+  text-decoration:none;
+  color:#fff;
+  transition:0.3s;
+  letter-spacing:2px;
+}
+
+.btn:hover{
+  background:#fff;
+  color:#000;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+section{
+  padding:120px 10%;
+}
+
+.title{
+  text-align:center;
+  font-size:28px;
+  letter-spacing:7px;
+  margin-bottom:50px;
+}
+
+/* =========================
+   GRID
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid #222;
+  padding:25px;
+  transition:0.4s;
+  backdrop-filter: blur(10px);
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  border-color:#555;
+}
+
+/* =========================
+   TEXT BLOCK
+========================= */
+.text{
+  max-width:800px;
+  margin:auto;
+  text-align:center;
+  color:#bbb;
+  line-height:1.9;
+}
+
+/* =========================
+   TAGS
+========================= */
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+
+.tag{
+  border:1px solid #333;
+  padding:8px 14px;
+  font-size:12px;
+  color:#aaa;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer{
+  text-align:center;
+  padding:40px;
+  font-size:12px;
+  color:#555;
+  letter-spacing:3px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>IU OS</h1>
+  <p>INNER UNKNOWN SYSTEM</p>
+  <span>You don’t know us… until it’s far too late.</span>
+  <a href="#about" class="btn">ENTER SYSTEM</a>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="title">IDENTITY CORE</div>
+  <div class="text">
+    IU OS is a cinematic digital identity system built around filmmaking, development, podcasting, and brand architecture.<br><br>
+    It operates as a structured creative ecosystem — not a portfolio.
+  </div>
+</section>
+
+<!-- SYSTEM MODULES -->
+<section>
+  <div class="title">SYSTEM MODULES</div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🎬 VISUAL ENGINE</h3>
+      <p>Cinematic filmmaking, editing, and luxury visual storytelling.</p>
+    </div>
+
+    <div class="card">
+      <h3>💻 DEV ENGINE</h3>
+      <p>Web development, backend systems, and platform architecture.</p>
+    </div>
+
+    <div class="card">
+      <h3>🎧 AUDIO ENGINE</h3>
+      <p>INNER UNKNOWN Podcast and global distribution network.</p>
+    </div>
+
+    <div class="card">
+      <h3>🧩 BRAND ENGINE</h3>
+      <p>Identity design, psychological branding, and system architecture.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section>
+  <div class="title">CORE STACK</div>
+
+  <div class="tags">
+    <div class="tag">Filmmaking</div>
+    <div class="tag">Video Editing</div>
+    <div class="tag">React</div>
+    <div class="tag">PHP</div>
+    <div class="tag">WordPress</div>
+    <div class="tag">UI/UX</div>
+    <div class="tag">Automation</div>
+    <div class="tag">System Design</div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section>
+  <div class="title">PROJECTS</div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>IU FLIX</h3>
+      <p>Custom OTT streaming system with hybrid architecture.</p>
+    </div>
+
+    <div class="card">
+      <h3>INNER UNKNOWN PODCAST</h3>
+      <p>Business and mindset-driven global podcast system.</p>
+    </div>
+
+    <div class="card">
+      <h3>66BIOLINK</h3>
+      <p>Creator link management and identity routing system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section>
+  <div class="title">PHILOSOPHY</div>
+  <div class="text">
+    Execution over attention.<br>
+    Systems over content.<br>
+    Identity over visibility.<br><br>
+    We do not create noise.<br>
+    We create structure.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+IU.PRIYANSHU // INNER UNKNOWN © 2026
+</footer>
+
+</body>
+</html>
