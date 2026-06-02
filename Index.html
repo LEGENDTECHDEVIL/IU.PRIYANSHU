@@ -1,302 +1,845 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<meta name="description" content="IU Priyanshu - Inner Unknown Ecosystem">
+<meta property="og:title" content="IU.PRIYANSHU">
+<meta property="og:description" content="Systems. Infrastructure. Identity.">
+<meta property="og:image" content="opengraph.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IU OS | INNER UNKNOWN</title>
-
+<title>IU.PRIYANSHU | Inner Unknown</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-
-/* =========================
-   GLOBAL SYSTEM
-========================= */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: Arial, Helvetica, sans-serif;
+:root{
+--red:#ff2b2b;
+--red-glow:rgba(255,43,43,.4);
+--red-dim:rgba(255,43,43,.15);
+--green:#00ff88;
+--india-saffron:#FF9933;
+--india-white:#ffffff;
+--india-green:#138808;
+--india-navy:#000080;
+--glass-bg:rgba(255,255,255,.04);
+--glass-border:rgba(255,255,255,.08);
+--card-hover-border:rgba(255,43,43,.35);
 }
-
-body{
-  background:#000;
-  color:#fff;
-  overflow-x:hidden;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:#050505;color:white;overflow-x:hidden;cursor:none;}
+/* ââ PRELOADER ââ */
+#preloader{
+position:fixed;inset:0;background:#050505;z-index:99999;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+transition:opacity .8s ease, visibility .8s ease;
 }
-
-/* =========================
-   CINEMATIC BACKGROUND
-========================= */
-.bg{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:radial-gradient(circle at center, rgba(255,0,0,0.12), transparent 60%);
-  animation:pulse 6s infinite;
-  z-index:-1;
+#preloader.hide{opacity:0;visibility:hidden;}
+.preloader-logo{
+font-size:72px;font-weight:900;letter-spacing:6px;
+background:linear-gradient(135deg,#fff,var(--red));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+animation:prelogopulse 1.2s ease infinite alternate;
 }
-
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.15);}
-  100%{transform:scale(1);}
+.preloader-bar{
+width:200px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;
+margin-top:30px;overflow:hidden;
 }
-
-/* =========================
-   HERO SECTION
-========================= */
+.preloader-fill{
+height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--india-saffron));
+border-radius:2px;animation:prebarfill 1.8s ease forwards;
+}
+@keyframes prelogopulse{from{opacity:.5;}to{opacity:1;}}
+@keyframes prebarfill{to{width:100%;}}
+/* ââ SCROLL PROGRESS BAR ââ */
+#scroll-progress{
+position:fixed;top:0;left:0;height:3px;width:0%;
+background:linear-gradient(90deg,var(--india-saffron),var(--india-white),var(--india-green));
+z-index:99998;transition:width .1s linear;
+box-shadow:0 0 8px var(--india-saffron);
+}
+/* ââ CUSTOM CURSOR ââ */
+#cursor{
+position:fixed;width:12px;height:12px;
+border-radius:50%;background:var(--red);
+pointer-events:none;z-index:99997;
+transform:translate(-50%,-50%);
+transition:transform .1s,background .2s;
+box-shadow:0 0 10px var(--red-glow);
+}
+#cursor-ring{
+position:fixed;width:36px;height:36px;
+border-radius:50%;border:1px solid rgba(255,43,43,.5);
+pointer-events:none;z-index:99996;
+transform:translate(-50%,-50%);
+transition:left .12s ease,top .12s ease,width .2s,height .2s,opacity .2s;
+}
+body:has(a:hover) #cursor{background:var(--india-saffron);}
+body:has(a:hover) #cursor-ring{width:50px;height:50px;border-color:rgba(255,153,51,.5);}
+/* ââ ANIMATED BACKGROUND ââ */
+body::before{
+content:'';position:fixed;width:100%;height:100%;
+background:
+radial-gradient(circle at 20% 20%,rgba(255,0,0,.15),transparent 25%),
+radial-gradient(circle at 80% 80%,rgba(0,100,255,.15),transparent 25%);
+z-index:-1;animation:floatbg 10s infinite alternate;
+}
+body::after{
+content:'';position:fixed;width:100%;height:100%;
+background:radial-gradient(circle at 50% 110%,rgba(120,0,255,.08),transparent 45%);
+z-index:-1;pointer-events:none;
+}
+@keyframes floatbg{from{transform:translateY(0px);}to{transform:translateY(-30px);}}
+#canvas-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:.35;}
+/* ââ NAVBAR ââ */
+nav{
+position:fixed;top:0;width:100%;padding:20px 8%;
+display:flex;justify-content:space-between;align-items:center;
+backdrop-filter:blur(20px);background:rgba(0,0,0,.3);
+z-index:999;border-bottom:1px solid rgba(255,43,43,.12);
+transition:padding .3s;
+}
+nav.scrolled{padding:12px 8%;background:rgba(0,0,0,.6);}
+.logo{
+font-size:24px;font-weight:900;letter-spacing:3px;color:white;
+background:linear-gradient(90deg,#fff 60%,var(--red));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nav-links a{
+text-decoration:none;color:white;margin-left:20px;opacity:.8;
+position:relative;padding-bottom:4px;transition:opacity .3s;
+}
+.nav-links a::after{
+content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+background:var(--red);transition:width .3s;
+}
+.nav-links a:hover,.nav-links a.active{opacity:1;}
+.nav-links a.active::after,.nav-links a:hover::after{width:100%;}
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;}
+.hamburger span{display:block;width:24px;height:2px;background:white;border-radius:2px;transition:.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{
+position:fixed;inset:0;background:rgba(0,0,0,.95);backdrop-filter:blur(20px);
+z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;
+gap:30px;opacity:0;visibility:hidden;transition:.4s;
+}
+.mobile-menu.open{opacity:1;visibility:visible;}
+.mobile-menu a{
+font-size:32px;font-weight:900;letter-spacing:4px;color:white;
+text-decoration:none;opacity:.7;transition:.2s;
+}
+.mobile-menu a:hover{opacity:1;color:var(--red);}
+/* ââ HERO ââ */
 .hero{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  position:relative;
+height:100vh;display:flex;align-items:center;padding:0 10%;
+background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.7)),url('banner.jpg');
+background-size:cover;background-position:center;
 }
-
+.hero-content{max-width:700px;}
+.hero-sub{
+color:var(--red);letter-spacing:4px;margin-bottom:15px;font-size:13px;
+display:flex;align-items:center;gap:10px;
+}
+.hero-sub::before{
+content:'';display:inline-block;width:32px;height:1px;background:var(--red);
+}
+/* ââ INDIAN FLAG GLITCH ââ */
 .hero h1{
-  font-size:65px;
-  letter-spacing:12px;
-  position:relative;
+font-size:80px;font-weight:900;line-height:1;margin-bottom:20px;
+position:relative;display:inline-block;letter-spacing:2px;
 }
-
-/* glitch effect */
 .hero h1::before,
 .hero h1::after{
-  content:"IU OS";
-  position:absolute;
-  left:0;
-  width:100%;
+content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;
 }
-
 .hero h1::before{
-  color:red;
-  top:-2px;
-  animation:glitch 2s infinite;
+color:var(--india-saffron);
+animation:glitch1 4s infinite;
+clip-path:polygon(0 0,100% 0,100% 33%,0 33%);
 }
-
 .hero h1::after{
-  color:blue;
-  top:2px;
-  animation:glitch 3s infinite;
+color:var(--india-green);
+animation:glitch2 4s infinite;
+clip-path:polygon(0 67%,100% 67%,100% 100%,0 100%);
 }
-
-@keyframes glitch{
-  0%{transform:translate(0);}
-  20%{transform:translate(-2px,2px);}
-  40%{transform:translate(2px,-2px);}
-  60%{transform:translate(-1px,1px);}
-  80%{transform:translate(1px,-1px);}
-  100%{transform:translate(0);}
+@keyframes glitch1{
+0%,88%,100%{transform:translate(0);}
+90%{transform:translate(-4px,2px);}
+92%{transform:translate(4px,-2px);}
+94%{transform:translate(-3px,1px);}
+96%{transform:translate(3px,-1px);}
+98%{transform:translate(-2px,0);}
 }
-
-.hero p{
-  margin-top:15px;
-  color:#aaa;
-  letter-spacing:6px;
+@keyframes glitch2{
+0%,88%,100%{transform:translate(0);}
+91%{transform:translate(4px,2px);}
+93%{transform:translate(-4px,-2px);}
+95%{transform:translate(3px,1px);}
+97%{transform:translate(-2px,0);}
+99%{transform:translate(2px,-1px);}
 }
-
-.hero span{
-  margin-top:25px;
-  color:#666;
-  font-size:13px;
-}
-
+/* typed roles */
+.hero-roles{font-size:18px;opacity:.8;margin-bottom:30px;line-height:1.8;}
+.typed-text{color:var(--india-saffron);font-weight:700;}
+.typed-cursor{animation:blink .7s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hero p{font-size:18px;opacity:.8;margin-bottom:30px;line-height:1.8;}
 .btn{
-  margin-top:30px;
-  padding:12px 28px;
-  border:1px solid #444;
-  text-decoration:none;
-  color:#fff;
-  transition:0.3s;
-  letter-spacing:2px;
+padding:14px 28px;border:none;cursor:none;text-decoration:none;
+display:inline-block;margin-right:15px;border-radius:12px;font-weight:700;
+transition:transform .2s,box-shadow .2s;letter-spacing:.5px;
 }
-
-.btn:hover{
-  background:#fff;
-  color:#000;
+.btn-primary{background:var(--red);color:white;}
+.btn-primary:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 0 24px var(--red-glow);}
+.btn-secondary{background:rgba(255,255,255,.08);color:white;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);}
+.btn-secondary:hover{transform:translateY(-2px);background:rgba(255,255,255,.13);}
+/* ââ GLASS ââ */
+.glass{
+background:rgba(255,255,255,.04);backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.08);border-radius:24px;
+transition:border-color .3s,box-shadow .3s;
 }
-
-/* =========================
-   SECTIONS
-========================= */
-section{
-  padding:120px 10%;
+/* ââ SECTIONS ââ */
+section{padding:120px 10%;}
+.section-title{
+font-size:50px;margin-bottom:50px;position:relative;display:inline-block;
 }
-
-.title{
-  text-align:center;
-  font-size:28px;
-  letter-spacing:7px;
-  margin-bottom:50px;
+.section-title::after{
+content:'';position:absolute;bottom:-10px;left:0;width:50px;height:3px;
+background:var(--red);border-radius:2px;box-shadow:0 0 8px var(--red-glow);
 }
-
-/* =========================
-   GRID
-========================= */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
+/* ââ ABOUT ââ */
+.about{display:grid;grid-template-columns:300px 1fr;gap:50px;align-items:center;}
+.profile{
+width:300px;height:300px;border-radius:50%;overflow:hidden;
+border:4px solid var(--red);animation:profilepulse 3s infinite;
 }
-
-.card{
-  background:rgba(255,255,255,0.03);
-  border:1px solid #222;
-  padding:25px;
-  transition:0.4s;
-  backdrop-filter: blur(10px);
+@keyframes profilepulse{
+0%,100%{box-shadow:0 0 0 0 var(--red-glow);}
+50%{box-shadow:0 0 0 12px rgba(255,43,43,0);}
 }
-
-.card:hover{
-  transform:translateY(-10px);
-  border-color:#555;
+.profile img{width:100%;height:100%;object-fit:cover;}
+.about-text{font-size:18px;line-height:2;opacity:.85;}
+/* ââ STATS ââ */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+.stat{padding:40px;text-align:center;}
+.stat:hover{border-color:var(--card-hover-border);box-shadow:0 0 30px rgba(255,43,43,.08);}
+.stat h2{font-size:50px;color:var(--red);text-shadow:0 0 20px var(--red-glow);}
+.stat p{opacity:.8;margin-top:6px;letter-spacing:.5px;}
+/* ââ PROJECTS (tilt cards) ââ */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;}
+.project{
+padding:30px;transition:border-color .3s,box-shadow .3s;
+position:relative;overflow:hidden;transform-style:preserve-3d;
+will-change:transform;
 }
-
-/* =========================
-   TEXT BLOCK
-========================= */
-.text{
-  max-width:800px;
-  margin:auto;
-  text-align:center;
-  color:#bbb;
-  line-height:1.9;
+.project::before{
+content:'';position:absolute;top:0;left:0;width:100%;height:2px;
+background:linear-gradient(90deg,transparent,var(--red),transparent);
+transform:scaleX(0);transition:transform .4s;
 }
-
-/* =========================
-   TAGS
-========================= */
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
+.project:hover{border-color:var(--card-hover-border);box-shadow:0 20px 40px rgba(0,0,0,.5),0 0 20px rgba(255,43,43,.08);}
+.project:hover::before{transform:scaleX(1);}
+.project h3{margin-bottom:15px;font-size:18px;letter-spacing:.5px;}
+.project p{opacity:.7;margin-bottom:20px;line-height:1.7;}
+.project a{
+color:var(--red);text-decoration:none;font-weight:600;
+font-size:14px;letter-spacing:.5px;transition:letter-spacing .2s;
 }
-
-.tag{
-  border:1px solid #333;
-  padding:8px 14px;
-  font-size:12px;
-  color:#aaa;
+.project a:hover{letter-spacing:1px;}
+/* ââ AI BOX ââ */
+.ai-box{padding:40px;}
+/* ââ TERMINAL ââ */
+.terminal{
+background:#000;padding:24px;border-radius:12px;font-family:monospace;
+color:var(--green);line-height:2;position:relative;overflow:hidden;
+border:1px solid rgba(0,255,136,.15);box-shadow:0 0 20px rgba(0,255,136,.05) inset;
 }
-
-/* =========================
-   FOOTER
-========================= */
-footer{
-  text-align:center;
-  padding:40px;
-  font-size:12px;
-  color:#555;
-  letter-spacing:3px;
+.terminal::before{
+content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);
+pointer-events:none;z-index:1;
 }
-
+.terminal::after{
+content:'';position:absolute;top:-50%;left:0;width:100%;height:200%;
+background:linear-gradient(transparent 40%,rgba(0,255,136,.025) 50%,transparent 60%);
+animation:scanline 6s linear infinite;pointer-events:none;z-index:2;
+}
+@keyframes scanline{0%{transform:translateY(-50%);}100%{transform:translateY(50%);}}
+.terminal span{display:block;overflow:hidden;white-space:nowrap;animation:typein .5s steps(30) forwards;opacity:0;}
+.terminal span:nth-child(1){animation-delay:.2s;}
+.terminal span:nth-child(2){animation-delay:.9s;}
+.terminal span:nth-child(3){animation-delay:1.6s;}
+.terminal span:nth-child(4){animation-delay:2.3s;}
+.terminal span:nth-child(5){animation-delay:3s;}
+@keyframes typein{from{max-width:0;opacity:1;}to{max-width:100%;opacity:1;}}
+/* ââ PROGRESS BARS ââ */
+.progress-item{margin-bottom:28px;}
+.progress-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;letter-spacing:.5px;}
+.progress-label span{color:var(--red);font-weight:700;}
+progress{
+width:100%;height:6px;border:none;border-radius:999px;overflow:hidden;
+appearance:none;-webkit-appearance:none;background:rgba(255,255,255,.08);
+}
+progress::-webkit-progress-bar{background:rgba(255,255,255,.08);border-radius:999px;}
+progress::-webkit-progress-value{
+background:linear-gradient(90deg,var(--red),#ff6b6b);border-radius:999px;box-shadow:0 0 8px var(--red-glow);
+}
+progress::-moz-progress-bar{background:linear-gradient(90deg,var(--red),#ff6b6b);border-radius:999px;}
+/* ââ ACHIEVEMENTS ââ */
+.achievement-item{
+padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);
+display:flex;align-items:center;gap:14px;font-size:16px;opacity:.85;
+transition:opacity .2s,padding-left .2s;
+}
+.achievement-item:last-child{border-bottom:none;}
+.achievement-item:hover{opacity:1;padding-left:8px;}
+/* ââ NETWORK STATUS ââ */
+.network-item{
+padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);
+display:flex;align-items:center;gap:14px;font-size:16px;
+}
+.network-item:last-child{border-bottom:none;}
+.dot{
+width:10px;height:10px;border-radius:50%;background:#00ff88;
+box-shadow:0 0 6px #00ff88;animation:pulse-dot 2s infinite;flex-shrink:0;
+}
+@keyframes pulse-dot{
+0%,100%{box-shadow:0 0 4px #00ff88;}
+50%{box-shadow:0 0 12px #00ff88,0 0 20px rgba(0,255,136,.3);}
+}
+/* ââ CONTACT ââ */
+.contact-item{
+padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05);
+font-size:16px;opacity:.85;display:flex;align-items:center;gap:12px;
+transition:opacity .2s,padding-left .2s;cursor:pointer;
+}
+.contact-item:last-child{border-bottom:none;}
+.contact-item:hover{opacity:1;padding-left:6px;}
+.contact-item i{color:var(--red);width:18px;}
+.copy-hint{font-size:11px;color:rgba(255,255,255,.3);margin-left:auto;}
+/* ââ FOOTER ââ */
+footer{padding:60px 10%;text-align:center;opacity:.7;}
+footer h3{letter-spacing:4px;margin-bottom:10px;}
+footer p{margin-top:6px;font-size:14px;letter-spacing:1px;}
+.footer-flag{
+display:inline-flex;gap:6px;align-items:center;margin-top:16px;
+}
+.flag-stripe{width:24px;height:4px;border-radius:2px;}
+.flag-stripe.s{background:var(--india-saffron);}
+.flag-stripe.w{background:var(--india-white);}
+.flag-stripe.g{background:var(--india-green);}
+/* ââ AI BUTTON ââ */
+#aiAssistant{
+position:fixed;bottom:25px;right:25px;width:65px;height:65px;
+border:none;border-radius:50%;background:var(--red);color:white;
+font-weight:bold;cursor:none;z-index:9999;
+box-shadow:0 0 0 0 var(--red-glow);animation:aibtn 2.5s infinite;
+font-size:13px;letter-spacing:.5px;transition:transform .2s;
+}
+#aiAssistant:hover{transform:scale(1.1);}
+@keyframes aibtn{
+0%,100%{box-shadow:0 0 0 0 var(--red-glow);}
+50%{box-shadow:0 0 0 10px rgba(255,43,43,0);}
+}
+/* ââ AI MODAL ââ */
+#aiModal{
+position:fixed;inset:0;z-index:99990;display:flex;align-items:flex-end;
+justify-content:flex-end;padding:110px 30px;
+pointer-events:none;
+}
+#aiPanel{
+background:rgba(10,10,10,.95);backdrop-filter:blur(24px);
+border:1px solid rgba(255,255,255,.1);border-radius:20px;
+padding:28px;width:300px;
+transform:translateY(20px) scale(.95);opacity:0;
+transition:transform .3s,opacity .3s;pointer-events:none;
+box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+#aiPanel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}
+.ai-panel-title{
+font-size:13px;letter-spacing:3px;opacity:.5;margin-bottom:18px;
+text-transform:uppercase;
+}
+.ai-option{
+display:flex;align-items:center;gap:14px;padding:14px 16px;
+border-radius:12px;cursor:none;text-decoration:none;color:white;
+transition:background .2s,transform .15s;margin-bottom:10px;
+border:1px solid rgba(255,255,255,.07);
+}
+.ai-option:last-child{margin-bottom:0;}
+.ai-option:hover{background:rgba(255,255,255,.08);transform:translateX(4px);}
+.ai-option-icon{
+width:40px;height:40px;border-radius:10px;display:flex;
+align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.ai-option-icon.gpt{background:linear-gradient(135deg,#10a37f,#1a7a60);}
+.ai-option-icon.gem{background:linear-gradient(135deg,#4285F4,#0F9D58);}
+.ai-option-info h4{font-size:15px;font-weight:700;margin-bottom:2px;}
+.ai-option-info p{font-size:12px;opacity:.5;}
+.ai-divider{
+height:1px;background:rgba(255,255,255,.06);margin:14px 0;
+position:relative;display:flex;align-items:center;justify-content:center;
+}
+.ai-divider span{
+background:rgba(10,10,10,.95);padding:0 10px;
+font-size:11px;opacity:.4;letter-spacing:2px;
+}
+.ai-close{
+width:100%;padding:10px;background:none;border:1px solid rgba(255,255,255,.07);
+border-radius:10px;color:rgba(255,255,255,.4);cursor:none;font-size:13px;
+margin-top:14px;transition:all .2s;letter-spacing:1px;
+}
+.ai-close:hover{background:rgba(255,43,43,.1);color:var(--red);border-color:rgba(255,43,43,.3);}
+/* ââ TOAST ââ */
+#toast{
+position:fixed;bottom:110px;right:25px;z-index:99995;
+background:rgba(20,20,20,.95);backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.1);border-radius:12px;
+padding:12px 20px;font-size:14px;color:white;
+transform:translateY(20px);opacity:0;transition:.3s;
+pointer-events:none;max-width:260px;
+}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.success{border-color:rgba(0,255,136,.3);}
+/* ââ SCROLL TO TOP ââ */
+#scrollTop{
+position:fixed;bottom:105px;right:25px;width:44px;height:44px;
+border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+color:white;cursor:none;z-index:9998;display:flex;align-items:center;justify-content:center;
+opacity:0;transform:translateY(20px);transition:.3s;font-size:14px;
+}
+#scrollTop.visible{opacity:1;transform:translateY(0);}
+#scrollTop:hover{background:var(--red);border-color:var(--red);}
+/* ââ REVEAL ââ */
+.reveal{opacity:0;transform:translateY(50px);transition:1s;}
+.reveal.active{opacity:1;transform:translateY(0);}
+/* ââ MOBILE ââ */
+@media(max-width:768px){
+.hero h1{font-size:50px;}
+.about{grid-template-columns:1fr;text-align:center;}
+.profile{margin:auto;}
+.nav-links{display:none;}
+.hamburger{display:flex;}
+body{cursor:auto;}
+#cursor,#cursor-ring{display:none;}
+}
 </style>
 </head>
-
 <body>
-
-<div class="bg"></div>
-
-<!-- HERO -->
-<div class="hero">
-  <h1>IU OS</h1>
-  <p>INNER UNKNOWN SYSTEM</p>
-  <span>You don’t know us… until it’s far too late.</span>
-  <a href="#about" class="btn">ENTER SYSTEM</a>
+<!-- Preloader -->
+<div id="preloader">
+<div class="preloader-logo">IU</div>
+<div class="preloader-bar"><div class="preloader-fill"></div></div>
 </div>
-
-<!-- ABOUT -->
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<!-- Scroll progress -->
+<div id="scroll-progress"></div>
+<!-- Scroll to top -->
+<button id="scrollTop" title="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
+<!-- Particle canvas -->
+<canvas id="canvas-bg"></canvas>
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="#about" onclick="closeMobile()">About</a>
+<a href="#projects" onclick="closeMobile()">Projects</a>
+<a href="#stats" onclick="closeMobile()">Stats</a>
+<a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+<!-- Navbar -->
+<nav id="navbar">
+<div class="logo">IU</div>
+<div class="nav-links">
+<a href="#about">About</a>
+<a href="#projects">Projects</a>
+<a href="#stats">Stats</a>
+<a href="#contact">Contact</a>
+</div>
+<div class="hamburger" id="hamburger" onclick="toggleMobile()">
+<span></span><span></span><span></span>
+</div>
+</nav>
+<!-- Hero -->
+<section class="hero">
+<div class="hero-content">
+<div class="hero-sub">INNER UNKNOWN ECOSYSTEM</div>
+<h1 data-text="PRIYANSHU">PRIYANSHU</h1>
+<p class="hero-roles">
+<span class="typed-text" id="typedText"></span><span class="typed-cursor">|</span><br>
+Building cinematic digital systems and scalable online ecosystems.
+</p>
+<a href="https://iu-hive.gt.tc/iu.priyanshu" class="btn btn-primary">OPEN BIO NETWORK</a>
+<a href="#projects" class="btn btn-secondary">VIEW SYSTEMS</a>
+</div>
+</section>
+<!-- About -->
 <section id="about">
-  <div class="title">IDENTITY CORE</div>
-  <div class="text">
-    IU OS is a cinematic digital identity system built around filmmaking, development, podcasting, and brand architecture.<br><br>
-    It operates as a structured creative ecosystem — not a portfolio.
-  </div>
+<h2 class="section-title">About Founder</h2>
+<div class="about">
+<div class="profile"><img src="profile.jpg"></div>
+<div class="about-text">
+IU Priyanshu is a multidisciplinary creator, filmmaker,
+developer and ecosystem builder operating under the
+Inner Unknown identity.
+Specialized in cinematic storytelling,
+PHP systems engineering,
+server administration,
+content production,
+and scalable web infrastructure.
+</div>
+</div>
 </section>
-
-<!-- SYSTEM MODULES -->
+<!-- Stats -->
+<section id="stats">
+<h2 class="section-title">Operational Statistics</h2>
+<div class="stats">
+<div class="glass stat">
+<h2 class="count" data-target="10" data-suffix="+">0</h2>
+<p>Years Building</p>
+</div>
+<div class="glass stat">
+<h2 class="count" data-target="1" data-suffix="M+">0</h2>
+<p>Gaming Sessions</p>
+</div>
+<div class="glass stat">
+<h2 class="count" data-target="100" data-suffix="+">0</h2>
+<p>Creative Projects</p>
+</div>
+<div class="glass stat">
+<h2>24/7</h2>
+<p>System Operations</p>
+</div>
+</div>
+</section>
+<!-- Projects -->
+<section id="projects">
+<h2 class="section-title">Infrastructure Projects</h2>
+<div class="projects">
+<div class="glass project">
+<h3>ð¬ IU FLIX</h3>
+<p>Custom OTT streaming platform.</p>
+<a href="https://iu-flix.gt.tc" target="_blank">Open Platform â</a>
+</div>
+<div class="glass project">
+<h3>ð§  IU HIVE</h3>
+<p>Digital identity management ecosystem.</p>
+<a href="https://iu-hive.gt.tc" target="_blank">Open Platform â</a>
+</div>
+<div class="glass project">
+<h3><i class="fa-brands fa-spotify"></i> Inner Unknown Podcast</h3>
+<p>Podcast and radio broadcasting network.</p>
+<a href="https://open.spotify.com/show/0Zzi4JdWNPrEp0jXxM2XdL?si=nowr8dugR4CzHGM1pk9kpA" target="_blank">Listen on Spotify â</a>
+</div>
+<div class="glass project">
+<h3>ð IU SHRINKER</h3>
+<p>Advanced URL shortening infrastructure.</p>
+<a href="https://iu-shrinker.gt.tc" target="_blank">Open Platform â</a>
+</div>
+<div class="glass project">
+<h3>ð Coming Soon</h3>
+<p>New Inner Unknown service under development.</p>
+<a href="#">Launching Soon â</a>
+</div>
+<div class="glass project">
+<h3>â¡ Coming Soon</h3>
+<p>Future ecosystem expansion project.</p>
+<a href="#">Launching Soon â</a>
+</div>
+</div>
+</section>
+<!-- Core Skills -->
 <section>
-  <div class="title">SYSTEM MODULES</div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>🎬 VISUAL ENGINE</h3>
-      <p>Cinematic filmmaking, editing, and luxury visual storytelling.</p>
-    </div>
-
-    <div class="card">
-      <h3>💻 DEV ENGINE</h3>
-      <p>Web development, backend systems, and platform architecture.</p>
-    </div>
-
-    <div class="card">
-      <h3>🎧 AUDIO ENGINE</h3>
-      <p>INNER UNKNOWN Podcast and global distribution network.</p>
-    </div>
-
-    <div class="card">
-      <h3>🧩 BRAND ENGINE</h3>
-      <p>Identity design, psychological branding, and system architecture.</p>
-    </div>
-  </div>
+<h2 class="section-title">Core Skills</h2>
+<div class="stats">
+<div class="glass stat"><h2>95%</h2><p>Web Development</p></div>
+<div class="glass stat"><h2>90%</h2><p>Video Editing</p></div>
+<div class="glass stat"><h2>85%</h2><p>Server Management</p></div>
+<div class="glass stat"><h2>92%</h2><p>Brand Design</p></div>
+</div>
 </section>
-
-<!-- SKILLS -->
+<!-- Achievements -->
 <section>
-  <div class="title">CORE STACK</div>
-
-  <div class="tags">
-    <div class="tag">Filmmaking</div>
-    <div class="tag">Video Editing</div>
-    <div class="tag">React</div>
-    <div class="tag">PHP</div>
-    <div class="tag">WordPress</div>
-    <div class="tag">UI/UX</div>
-    <div class="tag">Automation</div>
-    <div class="tag">System Design</div>
-  </div>
+<h2 class="section-title">Achievements</h2>
+<div class="glass ai-box">
+<div class="achievement-item">ðï¸ Independent Creator Since 2015</div>
+<div class="achievement-item">ð® 1M+ Gaming Sessions</div>
+<div class="achievement-item">ð Multiple Platforms Managed</div>
+<div class="achievement-item">ð¬ Advanced Video Production</div>
+<div class="achievement-item">ð» Full Stack Development</div>
+</div>
 </section>
-
-<!-- PROJECTS -->
+<!-- IU AI Terminal -->
 <section>
-  <div class="title">PROJECTS</div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>IU FLIX</h3>
-      <p>Custom OTT streaming system with hybrid architecture.</p>
-    </div>
-
-    <div class="card">
-      <h3>INNER UNKNOWN PODCAST</h3>
-      <p>Business and mindset-driven global podcast system.</p>
-    </div>
-
-    <div class="card">
-      <h3>66BIOLINK</h3>
-      <p>Creator link management and identity routing system.</p>
-    </div>
-  </div>
+<h2 class="section-title">IU AI Terminal</h2>
+<div class="glass ai-box">
+<div class="terminal">
+<span>&gt; Booting IU Operating System...</span>
+<span>&gt; Identity Loaded...</span>
+<span>&gt; Projects Indexed...</span>
+<span>&gt; Creator Status: <strong>ACTIVE</strong></span>
+<span>&gt; Ecosystem Status: <strong>ONLINE</strong></span>
+</div>
+</div>
 </section>
-
-<!-- PHILOSOPHY -->
+<!-- Current Progress -->
 <section>
-  <div class="title">PHILOSOPHY</div>
-  <div class="text">
-    Execution over attention.<br>
-    Systems over content.<br>
-    Identity over visibility.<br><br>
-    We do not create noise.<br>
-    We create structure.
-  </div>
+<h2 class="section-title">Current Progress</h2>
+<div class="glass ai-box">
+<div class="progress-item">
+<div class="progress-label">Portfolio Development <span>90%</span></div>
+<progress value="90" max="100"></progress>
+</div>
+<div class="progress-item">
+<div class="progress-label">IU Flix Development <span>75%</span></div>
+<progress value="75" max="100"></progress>
+</div>
+<div class="progress-item">
+<div class="progress-label">Podcast Expansion <span>60%</span></div>
+<progress value="60" max="100"></progress>
+</div>
+</div>
 </section>
-
-<!-- FOOTER -->
+<!-- Connect -->
+<section id="contact">
+<h2 class="section-title">Connect</h2>
+<div class="glass ai-box">
+<div class="contact-item" onclick="copyText('priyanshupatel599@gmail.com',this)">
+<i class="fa-solid fa-envelope"></i> priyanshupatel599@gmail.com
+<span class="copy-hint">click to copy</span>
+</div>
+<div class="contact-item" onclick="copyText('github.com/iu.priyanshu',this)">
+<i class="fa-brands fa-github"></i> github.com/iu.priyanshu
+<span class="copy-hint">click to copy</span>
+</div>
+<div class="contact-item" onclick="copyText('@iu.priyanshu',this)">
+<i class="fa-brands fa-instagram"></i> @iu.priyanshu
+<span class="copy-hint">click to copy</span>
+</div>
+</div>
+</section>
+<!-- Network Status -->
+<section>
+<h2 class="section-title">Network Status</h2>
+<div class="glass ai-box">
+<div class="network-item"><span class="dot"></span> IU Flix &mdash; Online</div>
+<div class="network-item"><span class="dot"></span> IU-HIVE &mdash; Online</div>
+<div class="network-item"><span class="dot"></span> Inner Unknown &mdash; Online</div>
+<div class="network-item"><span class="dot"></span> Creator Status &mdash; Active</div>
+</div>
+</section>
+<!-- Footer -->
 <footer>
-IU.PRIYANSHU // INNER UNKNOWN © 2026
+<h3>IU.PRIYANSHU</h3>
+<p>INNER UNKNOWN ECOSYSTEM</p>
+<p>&copy; 2027 &middot; Systems. Infrastructure. Identity.</p>
+<div class="footer-flag">
+<div class="flag-stripe s"></div>
+<div class="flag-stripe w"></div>
+<div class="flag-stripe g"></div>
+</div>
 </footer>
-
+<!-- AI Floating Button -->
+<button id="aiAssistant" onclick="toggleAI()">AI</button>
+<!-- AI Panel -->
+<div id="aiModal">
+<div id="aiPanel">
+<div class="ai-panel-title">Choose AI Assistant</div>
+<a href="https://chat.openai.com" target="_blank" class="ai-option" onclick="closeAI()">
+<div class="ai-option-icon gpt">ð¤</div>
+<div class="ai-option-info">
+<h4>ChatGPT</h4>
+<p>OpenAI Â· GPT-4o</p>
+</div>
+</a>
+<div class="ai-divider"><span>OR</span></div>
+<a href="https://gemini.google.com" target="_blank" class="ai-option" onclick="closeAI()">
+<div class="ai-option-icon gem">â¨</div>
+<div class="ai-option-info">
+<h4>Gemini</h4>
+<p>Google Â· Gemini 2.0</p>
+</div>
+</a>
+<button class="ai-close" onclick="closeAI()">â &nbsp; CLOSE</button>
+</div>
+</div>
+<!-- Toast -->
+<div id="toast"></div>
+<script>
+/* ââ PRELOADER ââ */
+window.addEventListener('load',()=>{
+setTimeout(()=>{
+document.getElementById('preloader').classList.add('hide');
+},1900);
+});
+/* ââ CUSTOM CURSOR ââ */
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+document.addEventListener('mousemove',e=>{
+cur.style.left=e.clientX+'px';
+cur.style.top=e.clientY+'px';
+ring.style.left=e.clientX+'px';
+ring.style.top=e.clientY+'px';
+});
+/* ââ SCROLL PROGRESS ââ */
+window.addEventListener('scroll',()=>{
+const el=document.getElementById('scroll-progress');
+const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+el.style.width=pct+'%';
+/* Navbar shrink */
+document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+/* Scroll-to-top visibility */
+document.getElementById('scrollTop').classList.toggle('visible',window.scrollY>300);
+/* Active nav */
+const sections=['about','stats','projects','contact'];
+let current='';
+sections.forEach(id=>{
+const s=document.getElementById(id);
+if(s&&window.scrollY>=s.offsetTop-200) current=id;
+});
+document.querySelectorAll('.nav-links a').forEach(a=>{
+a.classList.toggle('active',a.getAttribute('href')==='#'+current);
+});
+});
+/* ââ SCROLL TO TOP ââ */
+document.getElementById('scrollTop').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+/* ââ REVEAL ââ */
+const revealSections=document.querySelectorAll('section');
+revealSections.forEach(s=>s.classList.add('reveal'));
+function checkReveal(){
+revealSections.forEach(s=>{
+if(s.getBoundingClientRect().top<window.innerHeight-100){
+s.classList.add('active');
+}
+});
+}
+window.addEventListener('scroll',checkReveal);
+checkReveal();
+/* ââ PARTICLE CANVAS ââ */
+const canvas=document.getElementById('canvas-bg');
+const ctx=canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();
+window.addEventListener('resize',resize);
+for(let i=0;i<90;i++){
+particles.push({
+x:Math.random()*window.innerWidth,
+y:Math.random()*window.innerHeight,
+r:Math.random()*1.5+.5,
+dx:(Math.random()-.5)*.4,
+dy:(Math.random()-.5)*.4,
+o:Math.random()*.6+.2
+});
+}
+function drawParticles(){
+ctx.clearRect(0,0,W,H);
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle=`rgba(255,43,43,${p.o})`;
+ctx.fill();
+p.x+=p.dx;p.y+=p.dy;
+if(p.x<0||p.x>W) p.dx*=-1;
+if(p.y<0||p.y>H) p.dy*=-1;
+});
+requestAnimationFrame(drawParticles);
+}
+drawParticles();
+/* ââ TYPED ROLES ââ */
+const roles=['Digital Media Architect','Visual Director','Systems Engineer','Filmmaker & Creator','PHP Developer'];
+let ri=0,ci=0,deleting=false;
+const typedEl=document.getElementById('typedText');
+function type(){
+const word=roles[ri];
+if(!deleting){
+typedEl.textContent=word.slice(0,ci+1);
+ci++;
+if(ci===word.length){deleting=true;setTimeout(type,1800);return;}
+} else {
+typedEl.textContent=word.slice(0,ci-1);
+ci--;
+if(ci===0){deleting=false;ri=(ri+1)%roles.length;}
+}
+setTimeout(type,deleting?60:110);
+}
+type();
+/* ââ STAT COUNTERS ââ */
+const counts=document.querySelectorAll('.count');
+const counterObs=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+const el=entry.target;
+const target=+el.dataset.target;
+const suffix=el.dataset.suffix||'';
+let cur2=0;
+const step=Math.ceil(target/60);
+const t=setInterval(()=>{
+cur2+=step;
+if(cur2>=target){cur2=target;clearInterval(t);}
+el.textContent=cur2+suffix;
+},30);
+counterObs.unobserve(el);
+}
+});
+},{threshold:.5});
+counts.forEach(c=>counterObs.observe(c));
+/* ââ 3D CARD TILT ââ */
+document.querySelectorAll('.project').forEach(card=>{
+card.addEventListener('mousemove',e=>{
+const r=card.getBoundingClientRect();
+const x=((e.clientX-r.left)/r.width-.5)*16;
+const y=((e.clientY-r.top)/r.height-.5)*-16;
+card.style.transform=`perspective(600px) rotateY(${x}deg) rotateX(${y}deg) translateZ(6px)`;
+});
+card.addEventListener('mouseleave',()=>{
+card.style.transform='perspective(600px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+});
+});
+/* ââ HAMBURGER MENU ââ */
+function toggleMobile(){
+document.getElementById('hamburger').classList.toggle('open');
+document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobile(){
+document.getElementById('hamburger').classList.remove('open');
+document.getElementById('mobileMenu').classList.remove('open');
+}
+/* ââ AI PANEL ââ */
+let aiOpen=false;
+function toggleAI(){
+aiOpen=!aiOpen;
+document.getElementById('aiPanel').classList.toggle('open',aiOpen);
+document.getElementById('aiAssistant').textContent=aiOpen?'â':'AI';
+}
+function closeAI(){
+aiOpen=false;
+document.getElementById('aiPanel').classList.remove('open');
+document.getElementById('aiAssistant').textContent='AI';
+}
+document.addEventListener('click',e=>{
+if(aiOpen&&!e.target.closest('#aiPanel')&&e.target.id!=='aiAssistant') closeAI();
+});
+/* ââ COPY TO CLIPBOARD ââ */
+function copyText(text,el){
+navigator.clipboard.writeText(text).then(()=>{
+showToast('<i class="fa-solid fa-check"></i> &nbsp; Copied to clipboard','success');
+});
+}
+/* ââ TOAST ââ */
+let toastTimer;
+function showToast(msg,type=''){
+const t=document.getElementById('toast');
+t.innerHTML=msg;
+t.className='show '+(type||'');
+clearTimeout(toastTimer);
+toastTimer=setTimeout(()=>t.className='',2500);
+}
+</script>
 </body>
 </html>
